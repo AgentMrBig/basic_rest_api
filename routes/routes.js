@@ -1,4 +1,6 @@
 const express = require('express');
+const passport = require('passport');
+
 const router = express.Router();
 
 router.get('/', (request, response) => {
@@ -9,25 +11,33 @@ router.get('/status', (request, response) => {
   response.status(200).json({ message: 'ok', status: 200 });
 });
 
-router.post('/signup', (request, response, next) => {
-  console.log(request.body);
-  if (!request.body) {
-    response
-      .status(400)
-      .json({ message: 'bad request, invalid body', status: 400 });
-  } else {
-    response.status(200).json({ message: 'ok', status: 200 });
+router.post(
+  '/signup',
+  passport.authenticate('signup', { session: false }),
+  (request, response, next) => {
+    response.status(200).json({ message: 'signup successful', status: 200 });
   }
-});
+);
 
-router.post('/login', (request, response) => {
-  if (!request.body) {
-    response
-      .status(400)
-      .json({ message: 'bad request, invalid body', status: 400 });
-  } else {
-    response.status(200).json({ message: 'ok', status: 200 });
-  }
+router.post('/login', (request, response, next) => {
+  passport.authenticate('login', (error, user) => {
+    try {
+      if (error) {
+        return next(error);
+      }
+      if (!user) {
+        return next(new Error('email and password are required'));
+      }
+
+      request.login(user, { session: false }, (err) => {
+        if (err) return next(err);
+        return response.status(200).json({ user, status: 200 });
+      });
+    } catch (err) {
+      console.log(err);
+      return next(err);
+    }
+  })(request, response, next);
 });
 
 router.post('/logout', (request, response) => {

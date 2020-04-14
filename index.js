@@ -18,6 +18,9 @@ app.use(bodyParser.json()); // parse application/json
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN }));
 
+// require passport auth
+require('./auth/auth');
+
 // setup routes
 app.use('/', routes);
 app.use('/', passwordRoutes);
