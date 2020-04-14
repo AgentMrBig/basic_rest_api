@@ -1,0 +1,19 @@
+{
+  "name": "rest_api",
+  "version": "1.0.0",
+  "description": "Basic Rest API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgentMrBig/basic_rest_api.git"
+  },
+  "author": "Eric Hendrix",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AgentMrBig/basic_rest_api/issues"
+  },
+  "homepage": "https://github.com/AgentMrBig/basic_rest_api#readme"
+}
